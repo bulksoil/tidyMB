@@ -11,7 +11,7 @@
 #' @examples
 #' tidy_pcoa()
 
-tidy_pcoa <- function(x, samples = "SampleID", otus = "variable", value = "RA", dist = "bray"){
+tidy_pcoa <- function(x, samples = "SampleID", otus = "variable", value = "RA", dist = "bray", keep_loadings = F){
   to_drop <- otus
   metadata <- x %>% 
     dplyr::ungroup() %>% 
@@ -26,6 +26,8 @@ tidy_pcoa <- function(x, samples = "SampleID", otus = "variable", value = "RA", 
   pc <- vegan::capscale(log2(wide_table[,2:ncol(wide_table)] + 1) ~ 1, dist = dist)
   axes <- dplyr::bind_cols(metadata, dplyr::as_tibble(vegan::scores(pc, choices = c(1:5))$sites))
   eigen_vals <- vegan::eigenvals(pc) / sum(vegan::eigenvals(pc))
-  
-  return(list(axes = axes, eigen_vals = eigen_vals))
+
+  ifelse(keep_loadings, 
+    return(list(axes = axes, loadings = pc$CA$v, eigen_vals = eigen_vals)),
+    return(list(axes = axes, eigen_vals = eigen_vals)))
 }

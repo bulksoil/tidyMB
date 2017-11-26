@@ -25,5 +25,5 @@ long_adonis <- function(x, samples = "SampleID", otus = "variable", value = "RA"
 		tidyr::spread_(otus, value, fill = 0)
 
 	permanova <- vegan::adonis(as.formula(paste("wide_table[,2:ncol(wide_table)] ~ ", formula, sep = "")), data = metadata, dist = dist)
-	return(permanova)
+	return(permanova$aov.tab)
 }

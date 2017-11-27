@@ -9,7 +9,9 @@
 #' grab_metadata()
 
 grab_metadata <- function(x, samples = "SampleID", otus = "variable"){
+	message("Gathering metadata")
 	to_drop <- otus
+	warning(paste("Removing the variable ", to_drop, " from the table", sep = ""))
  	metadata <- x %>% 
 		dplyr::ungroup() %>% 
 		purrr::discard(is.double) %>% 

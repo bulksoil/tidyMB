@@ -12,10 +12,6 @@ widen(x, samples = "SampleID", otus = "variable", value = "RA")
 \item{otus}{The column header for your OTU identifiers. Defaults to variable}
 
 \item{value}{The column header for the OTU abundances. Defaults to RA}
-
-\item{dist}{The distance metric options from vegan's vegdist(). Defaults to bray}
-
-\item{formula}{The formula to feed into adonis}
 }
 \value{
 tibble of OTUs by Sample IDs

@@ -10,6 +10,7 @@
 #' widen()
 
 widen <- function(x, samples = "SampleID", otus = "variable", value = "RA"){
+	message("Converting to wide table.")
 	wide_table <- x %>% 
 		dplyr::select_(samples, otus, value) %>% 
 		tidyr::spread_(otus, value, fill = 0)

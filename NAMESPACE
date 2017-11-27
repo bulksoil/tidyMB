@@ -2,5 +2,6 @@
 
 export(grab_metadata)
 export(long_adonis)
+export(tidyDGEL)
 export(tidy_pcoa)
 export(widen)

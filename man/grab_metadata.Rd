@@ -10,18 +10,12 @@ grab_metadata(x, samples = "SampleID", otus = "variable")
 \item{samples}{The column header for your sample identifiers. Defaults to SampleID}
 
 \item{otus}{The column header for your OTU identifiers. Defaults to variable}
-
-\item{value}{The column header for the OTU abundances. Defaults to RA}
-
-\item{dist}{The distance metric options from vegan's vegdist(). Defaults to bray}
-
-\item{formula}{The formula to feed into adonis}
 }
 \value{
 tibble of OTUs by Sample IDs
 }
 \description{
-This function will take the long table and turn it back into a matrix with OTUs by Sample IDs.
+This function will take a tidy dataframe and return the distinct information about each sample.
 }
 \examples{
 grab_metadata()

@@ -12,16 +12,9 @@
 #' tidy_pcoa()
 
 tidy_pcoa <- function(x, samples = "SampleID", otus = "variable", value = "RA", dist = "bray", keep_loadings = F){
-  to_drop <- otus
-  metadata <- x %>% 
-    dplyr::ungroup() %>% 
-    purrr::discard(is.double) %>% 
-    dplyr::select_(.dots = paste("-", to_drop)) %>% 
-    dplyr::distinct()
-  
-  wide_table <- x %>% 
-    dplyr::select_(samples, otus, value) %>% 
-    tidyr::spread_(otus, value, fill = 0)
+
+  metadata <- tidyMB::grab_metadata(x, samples = samples, otus = otus)
+  wide_table <- tidyMB::widen(x, samples = samples, otus = otus, value = value)
   
   pc <- vegan::capscale(log2(wide_table[,2:ncol(wide_table)] + 1) ~ 1, dist = dist)
   axes <- dplyr::bind_cols(metadata, dplyr::as_tibble(vegan::scores(pc, choices = c(1:5))$sites))

@@ -13,16 +13,9 @@
 #' long_adonis()
 
 long_adonis <- function(x, samples = "SampleID", otus = "variable", value = "RA", dist = "bray", formula) {
-	to_drop <- otus
- 	metadata <- x %>% 
-		dplyr::ungroup() %>% 
-		purrr::discard(is.double) %>% 
-		dplyr::select_(.dots = paste("-", to_drop)) %>% 
-		dplyr::distinct()
-  
-	wide_table <- x %>% 
-		dplyr::select_(samples, otus, value) %>% 
-		tidyr::spread_(otus, value, fill = 0)
+	
+	metadata <- tidyMB::grab_metadata(x, samples = samples, otus = otus)
+	wide_table <- tidyMB::widen(x, samples = samples, otus = otus, value = value)
 
 	permanova <- vegan::adonis(as.formula(paste("wide_table[,2:ncol(wide_table)] ~ ", formula, sep = "")), data = metadata, dist = dist)
 	return(permanova$aov.tab)

@@ -12,14 +12,13 @@
 #' widen()
 
 tidyDGEL <- function(x, method = "edgeR", samples = "SampleID", otus = "variable", value = "value", group_column = NULL, formula = NULL){
-
 	
 	wide_table <- tidyMB::widen(x, samples = samples, otus = otus, value = value)
 	metadata <- tidyMB::grab_metadata(x, samples = samples, otus = otus)
 
 	if(method == "edgeR"){
 		y = edgeR::DGEList(counts = t(wide_table[,2:ncol(wide_table)]), 
-		                   group = metadata %>% select_(group_column) %>% dplyr::pull())
+		                   group = metadata %>% dplyr::select_(group_column) %>% dplyr::pull())
 	} else if(method == "DESeq2") {
 		y = DESeq2::DESeqDataSetFromMatrix(countData = t(wide_table[,2:ncol(wide_table)]), 
 		                                   colData = metadata,

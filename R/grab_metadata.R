@@ -11,7 +11,7 @@
 grab_metadata <- function(x, samples = "SampleID", otus = "variable"){
 	message("Gathering metadata")
 	to_drop <- otus
-	warning(paste("Removing the column ", to_drop, " from the table.\n", sep = ""))
+	warning(paste("Removing the column ", to_drop, " from the metadata.\n", sep = ""))
  	metadata <- x %>% 
 		dplyr::ungroup() %>% 
 		purrr::discard(is.double) %>% 

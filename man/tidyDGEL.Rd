@@ -5,7 +5,7 @@
 \title{Create a DGEL object from tidy table}
 \usage{
 tidyDGEL(x, method = "edgeR", samples = "SampleID", otus = "variable",
-  value = "value", group)
+  value = "value", group_column = NULL, formula = NULL)
 }
 \arguments{
 \item{method}{The method for doing differential gene expression. Defaults to edgeR.}

@@ -1,4 +1,4 @@
-#' Convert long data to a long dataframe of pairwise distances
+#' Convert long data to wide distance
 #'
 #' This function is a wrapper around Vegan's adonis function for performing PERMANOVA on tidy (long) data.
 #' @param samples The column header for your sample identifiers. Defaults to SampleID
@@ -9,27 +9,18 @@
 #' @keywords adonis
 #' @export
 #' @examples
-#' long_distance()
+#' wide_distance()
 
-long_distance <- function(x, samples = "SampleID", otus = "variable", value = "RA", dist = "bray") {
+wide_distance <- function(x, samples = "SampleID", otus = "variable", value = "RA", dist = "bray") {
 	
 	metadata <- tidyMB::grab_metadata(x, samples = samples, otus = otus)
 	wide_table <- tidyMB::widen(x, samples = samples, otus = otus, value = value)
 
-	dist_ <- as.matrix(vegan::vegdist(wide_table[,2:ncol(wide_table)], dist = dist))
+	sample_labels <- metadata %>% pull(`samples`)
 
-	row.names(dist_) <- metadata %>% dplyr::pull(`samples`)
-	colnames(dist_) <- metadata %>% dplyr::pull(`samples`)
+	dist_ <- vegan::vegdist(wide_table[,2:ncol(wide_table)], dist = dist)
+	
+	attr(dist_, "Labels") <- sample_labels
 
-	dist_[upper.tri(dist_, diag = T)] <- NA
-
-	Var1 <- "Var1"
-	Var2 <- "Var2"
-
-	dist_long <- reshape2::melt(dist_) %>% 
-		na.omit() %>%
-		dplyr::inner_join(metadata, by = setNames(samples, Var1)) %>%
-		dplyr::inner_join(metadata, by = setNames(samples, Var2))
-
-	return(dist_long)
+	return(dist_)
 }

@@ -21,10 +21,13 @@ long_distance <- function(x, samples = "SampleID", otus = "variable", value = "R
 	row.names(dist_) <- metadata %>% dplyr::pull(`samples`)
 	colnames(dist_) <- metadata %>% dplyr::pull(`samples`)
 
+	dist_[upper.tri(dist_, diag = T)] <- NA
+
 	Var1 <- "Var1"
 	Var2 <- "Var2"
-	
+
 	dist_long <- reshape2::melt(dist_) %>% 
+		na.omit() %>%
 		dplyr::inner_join(metadata, by = setNames(samples, Var1)) %>%
 		dplyr::inner_join(metadata, by = setNames(samples, Var2))
 

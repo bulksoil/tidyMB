@@ -5,13 +5,14 @@
 #' @param otus The column header for your OTU identifiers. Defaults to variable
 #' @param value The column header for the OTU abundances. Defaults to RA
 #' @param dist The distance metric options from vegan's vegdist(). Defaults to bray
+#' @param keep_metadata Option to attach metadata onto the long distance object. Defaults to TRUE
 #' @return S3 adonis object
 #' @keywords adonis
 #' @export
 #' @examples
 #' long_distance()
 
-long_distance <- function(x, samples = "SampleID", otus = "variable", value = "RA", dist = "bray") {
+long_distance <- function(x, samples = "SampleID", otus = "variable", value = "RA", dist = "bray", keep_metadata = T) {
 	
 	metadata <- tidyMB::grab_metadata(x, samples = samples, otus = otus)
 	wide_table <- tidyMB::widen(x, samples = samples, otus = otus, value = value)
@@ -26,10 +27,14 @@ long_distance <- function(x, samples = "SampleID", otus = "variable", value = "R
 	Var1 <- "Var1"
 	Var2 <- "Var2"
 
-	dist_long <- reshape2::melt(dist_) %>% 
-		na.omit() %>%
-		dplyr::inner_join(metadata, by = setNames(samples, Var1)) %>%
-		dplyr::inner_join(metadata, by = setNames(samples, Var2))
+	dist_long <- reshape2::melt(dist_) %>% na.omit()
+	if(keep_metadata) {
+		return(dist_long %>% 
+					dplyr::inner_join(metadata, by = setNames(samples, Var1)) %>%
+					dplyr::inner_join(metadata, by = setNames(samples, Var2)))
+		} else {
+			return(dist_long)
+		}
 
-	return(dist_long)
+	
 }

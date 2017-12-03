@@ -4,7 +4,8 @@
 \alias{widen}
 \title{Widen Long Data}
 \usage{
-widen(x, samples = "SampleID", otus = "variable", value = "RA")
+widen(x, samples = "SampleID", otus = "variable", value = "RA",
+  return_df = FALSE)
 }
 \arguments{
 \item{samples}{The column header for your sample identifiers. Defaults to SampleID}
@@ -12,6 +13,8 @@ widen(x, samples = "SampleID", otus = "variable", value = "RA")
 \item{otus}{The column header for your OTU identifiers. Defaults to variable}
 
 \item{value}{The column header for the OTU abundances. Defaults to RA}
+
+\item{return_df}{Will return a dataframe instead of a tibble if TRUE. Defaults to FALSE}
 }
 \value{
 tibble of OTUs by Sample IDs

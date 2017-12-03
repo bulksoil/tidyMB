@@ -18,8 +18,8 @@ widen <- function(x, samples = "SampleID", otus = "variable", value = "RA", retu
 	  ungroup()
 
 	if(return_df) {
-	  df_row_names <- wide_table %>% dplyr::select_(samples) %>% pull()
-	  wide_table <- wide_table %>% dplyr::select_(.dots = paste("-", samples))
+		df_row_names <- wide_table %>% dplyr::select_(samples) %>% pull()
+		wide_table <- wide_table %>% dplyr::select_(.dots = paste("-", samples))
 		wide_table = as.data.frame(wide_table)
 		row.names(wide_table) <- df_row_names
 		return(wide_table)

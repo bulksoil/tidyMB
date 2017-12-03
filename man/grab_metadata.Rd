@@ -4,12 +4,15 @@
 \alias{grab_metadata}
 \title{Grab Metadata}
 \usage{
-grab_metadata(x, samples = "SampleID", otus = "variable")
+grab_metadata(x, samples = "SampleID", otus = "variable",
+  return_df = FALSE)
 }
 \arguments{
 \item{samples}{The column header for your sample identifiers. Defaults to SampleID}
 
 \item{otus}{The column header for your OTU identifiers. Defaults to variable}
+
+\item{return_df}{Will return a dataframe instead of a tibble if TRUE. Defaults to FALSE}
 }
 \value{
 tibble of OTUs by Sample IDs

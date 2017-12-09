@@ -10,16 +10,23 @@ I think there are two ways to do it.
 
 ### Method 1
 One is to clone this githup repo like so
+
 `git clone https://github.com/bulksoil/tidyMB.git`
+
 Then install devtools in R, if you do not already have it
+
 `install.packages("devtools")`
+
 Set your working directory to the directory above where you downloaded the tidyMB package. Then use install using devtools.
+
 `setwd("/Path/to/the/directory")
 devtools::install("tidyMB")`
 
 Because most of the functions here are wrappers, you will need to have the tidyverse and vegan installed
+
 `install.packages(c("tidyverse", "vegan"))`
 
 ### Method 2: Install directly using devtools
 A bit different than the above
+
 `install_github("bulksoil/tidyMB")`

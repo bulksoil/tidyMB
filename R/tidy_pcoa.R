@@ -14,9 +14,12 @@
 tidy_pcoa <- function(x, samples = "SampleID", otus = "variable", value = "RA", dist = "bray", keep_loadings = F){
 
   metadata <- tidyMB::grab_metadata(x, samples = samples, otus = otus)
-  wide_table <- tidyMB::widen(x, samples = samples, otus = otus, value = value)
+  wide_table <- tidyMB::widen(x, samples = samples, otus = otus, value = value, return_df = TRUE)
+
+  md_samples <- metadata %>% ungroup %>% dplyr::select(`samples`) %>% pull()
+  wide_table <- wide_table[match(md_samples, row.names(wide_table)),]
   
-  pc <- vegan::capscale(wide_table[,2:ncol(wide_table)] ~ 1, dist = dist)
+  pc <- vegan::capscale(wide_table ~ 1, dist = dist)
   axes <- dplyr::bind_cols(metadata, dplyr::as_tibble(vegan::scores(pc, choices = c(1:5))$sites))
   eigen_vals <- vegan::eigenvals(pc) / sum(vegan::eigenvals(pc))
 

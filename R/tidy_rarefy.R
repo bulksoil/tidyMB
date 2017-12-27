@@ -9,7 +9,7 @@
 #' @keywords Rarefaction
 #' @export
 #' @examples
-#' tidy_pcoa()
+#' tidy_rarefy()
 
 tidy_rarefy <- function(x, depth = NULL, samples = "SampleID", otus = "variable", value = "value") {
 

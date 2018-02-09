@@ -10,7 +10,8 @@ I think there are two ways to do it.
 
 ### Method 1: Install directly using devtools
 A bit different than the above
-
+`install.packages(devtools)`
+`library(devtools)`
 `install_github("bulksoil/tidyMB")`
 
 ### Method 2: Fork the repo and install it in R
@@ -21,7 +22,7 @@ If you want to contribute to this repo, or do some development by yourself (with
 Then install devtools in R, if you do not already have it
 
 `install.packages("devtools")`
-
+`library(devtools)`
 Set your working directory to the directory above where you downloaded the tidyMB package. Then use install using devtools.
 
 `setwd("/Path/to/the/directory")

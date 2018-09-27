@@ -17,6 +17,7 @@ long_adonis <- function(x, samples = "SampleID", otus = "variable", value = "RA"
 	metadata <- tidyMB::grab_metadata(x, samples = samples, otus = otus)
 	wide_table <- tidyMB::widen(x, samples = samples, otus = otus, value = value)
 
+	metadata <- metadata[match(row.names(metadata), row.names(wide_table)),]
 	permanova <- vegan::adonis(as.formula(paste("wide_table[,2:ncol(wide_table)] ~ ", formula, sep = "")), data = metadata, dist = dist)
 	return(permanova$aov.tab)
 }

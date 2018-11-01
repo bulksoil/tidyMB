@@ -11,12 +11,12 @@
 
 grab_metadata <- function(x, samples = "SampleID", otus = "variable", return_df = FALSE){
 	message("Gathering metadata")
-	to_drop <- otus
+	to_drop <- c(otus, "value")
 	warning(paste("Removing the column ", to_drop, " from the metadata.\n", sep = ""))
  	metadata <- x %>% 
 		dplyr::ungroup() %>% 
-		purrr::discard(is.double) %>% 
-		purrr::discard(is.integer) %>%
+		#purrr::discard(is.double) %>% 
+		#purrr::discard(is.integer) %>%
 		dplyr::select_(.dots = paste("-", to_drop)) %>% 
 		dplyr::distinct()
 

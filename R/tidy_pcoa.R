@@ -13,7 +13,7 @@
 
 tidy_pcoa <- function(x, samples = "SampleID", otus = "variable", value = "RA", dist = "bray", keep_loadings = F){
 
-  metadata <- tidyMB::grab_metadata(x, samples = samples, otus = otus)
+  metadata <- tidyMB::grab_metadata(x, samples = samples, otus = otus, value = value)
   wide_table <- tidyMB::widen(x, samples = samples, otus = otus, value = value, return_df = TRUE)
 
   md_samples <- metadata %>% ungroup %>% dplyr::select(`samples`) %>% pull()

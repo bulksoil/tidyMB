@@ -14,7 +14,7 @@
 tidyDGEL <- function(x, method = "edgeR", samples = "SampleID", otus = "variable", value = "value", group_column = NULL, formula = NULL){
 	
 	wide_table <- tidyMB::widen(x, samples = samples, otus = otus, value = value, return_df = T)
-	metadata <- tidyMB::grab_metadata(x, samples = samples, otus = otus, return_df = T)
+	metadata <- tidyMB::grab_metadata(x, samples = samples, otus = otus, value = value, return_df = T)
 	metadata <- metadata[match(row.names(wide_table), row.names(metadata)),]
 
 	if(method == "edgeR"){

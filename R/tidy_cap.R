@@ -16,6 +16,9 @@ tidy_cap <- function(x, samples = "SampleID", otus = "variable", value = "RA", d
 
   metadata <- tidyMB::grab_metadata(x, samples = samples, otus = otus, return_df = F)
   wide_table <- tidyMB::widen(x, samples = samples, otus = otus, value = value, return_df = F)
+
+  md_samples <- metadata %>% ungroup %>% dplyr::select(`samples`) %>% pull()
+  wide_table <- wide_table[match(md_samples, row.names(wide_table)),]
   
   pc <- vegan::capscale(as.formula(paste("wide_table[,2:ncol(wide_table)] ~ ", formula, sep = "")), data = metadata, dist = dist)
   axes <- dplyr::bind_cols(metadata, dplyr::as_tibble(vegan::scores(pc, choices = c(1:5))$sites))

@@ -13,12 +13,12 @@
 
 wide_distance <- function(x, samples = "SampleID", otus = "variable", value = "RA", dist = "bray") {
 	
-	metadata <- tidyMB::grab_metadata(x, samples = samples, otus = otus)
-	wide_table <- tidyMB::widen(x, samples = samples, otus = otus, value = value)
+	metadata <- tidyMB::grab_metadata(x, samples = samples, otus = otus, value = value)
+	wide_table <- tidyMB::widen(x, samples = samples, otus = otus, value = value, return_df = TRUE)
 
 	sample_labels <- metadata %>% pull(`samples`)
 
-	dist_ <- vegan::vegdist(wide_table[,2:ncol(wide_table)], dist = dist)
+	dist_ <- vegan::vegdist(wide_table dist = dist)
 	
 	attr(dist_, "Labels") <- sample_labels
 

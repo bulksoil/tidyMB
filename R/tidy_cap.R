@@ -19,10 +19,11 @@ tidy_cap <- function(x, samples = "SampleID", otus = "variable", value = "RA", d
 
   md_samples <- metadata %>% ungroup %>% dplyr::select(`samples`) %>% pull()
   wide_table <- wide_table[match(md_samples, row.names(wide_table)),]
+  return(wide_table)
   
   pc <- vegan::capscale(as.formula(paste("wide_table ~ ", formula, sep = "")), data = metadata, dist = dist)
   axes <- dplyr::bind_cols(metadata, dplyr::as_tibble(vegan::scores(pc, choices = c(1:5))$sites))
   eigen_vals <- vegan::eigenvals(pc) / sum(vegan::eigenvals(pc))
 
-  return(list(axes = axes, eigen_vals = eigen_vals))
+  return(list(axes = axes, eigen_vals = eigen_vals, mod = anova(pc)))
 }

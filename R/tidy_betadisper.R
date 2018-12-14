@@ -15,9 +15,9 @@
 tidy_betadisper <- function(x, samples = "SampleID", otus = "variable", value = "RA", dist = "bray", group = NULL){
 
   metadata <- tidyMB::grab_metadata(x, samples = samples, otus = otus, return_df = F)
-  wide_table <- tidyMB::widen(x, samples = samples, otus = otus, value = value, return_df = F)
+  wide_table <- tidyMB::widen(x, samples = samples, otus = otus, value = value, return_df = TRUE)
   
-  dist_ <- vegan::vegdist(wide_table[,2:ncol(wide_table)], dist = dist)
+  dist_ <- vegan::vegdist(wide_table, dist = dist)
 
   bd <- vegan::betadisper(dist_, metadata$`group`)
                           

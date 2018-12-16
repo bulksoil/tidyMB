@@ -18,7 +18,7 @@ tidyDGEL <- function(x, method = "edgeR", samples = "SampleID", otus = "variable
 	metadata <- metadata[match(row.names(wide_table), row.names(metadata)),]
 
 	if(method == "edgeR"){
-		y = edgeR::DGEList(counts = t(wide_table[,2:ncol(wide_table)]), 
+		y = edgeR::DGEList(counts = t(wide_table), 
 		                   group = metadata %>% dplyr::select_(group_column) %>% dplyr::pull())
 	} else if(method == "DESeq2") {
 		y = DESeq2::DESeqDataSetFromMatrix(countData = t(wide_table[,2:ncol(wide_table)]), 

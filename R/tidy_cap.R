@@ -14,7 +14,7 @@
 
 tidy_cap <- function(x, samples = "SampleID", otus = "variable", value = "RA", dist = "bray", formula = NULL){
 
-  metadata <- tidyMB::grab_metadata(x, samples = samples, otus = otus, return_df = T)
+  metadata <- tidyMB::grab_metadata(x, samples = samples, otus = otus, value = value)
   wide_table <- tidyMB::widen(x, samples = samples, otus = otus, value = value, return_df = T)
 
   md_samples <- metadata %>% ungroup %>% dplyr::select(`samples`) %>% pull()

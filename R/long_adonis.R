@@ -13,11 +13,11 @@
 #' long_adonis()
 
 long_adonis <- function(x, samples = "SampleID", otus = "variable", value = "RA", dist = "bray", formula) {
-	
+
 	metadata <- tidyMB::grab_metadata(x, samples = samples, otus = otus, value = value, return_df = TRUE)
 	wide_table <- tidyMB::widen(x, samples = samples, otus = otus, value = value, return_df = TRUE)
 
 	metadata <- metadata[match(row.names(wide_table), row.names(metadata)),]
-	permanova <- vegan::adonis(as.formula(paste("wide_table[,2:ncol(wide_table)] ~ ", formula, sep = "")), data = metadata, dist = dist)
+	permanova <- vegan::adonis(as.formula(paste("wide_table[,2:ncol(wide_table)] ~ ", formula, sep = "")), data = metadata, method = dist)
 	return(permanova$aov.tab)
 }
